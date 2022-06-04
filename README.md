@@ -13,6 +13,10 @@
 2. 마운트할 공유 디렉토리 생성 
 3. Mount
 
+<br />    
+<br />    
+
+## 3. 실행 방법
 ```
 $ ansible-playbook nfs_adv.yml -k
 ```
