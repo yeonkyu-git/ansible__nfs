@@ -1,0 +1,15 @@
+---
+- name: Configure NFS Server
+  hosts: localhost
+  tasks:
+  - name: Configure NFS Server
+    include_tasks: "nfs_server.yml"
+
+- name: Configure NFS Client
+  hosts: nodes
+  tasks:
+  - name: Configrue NFS Client
+    include_tasks: "nfs_client.yml"
+
+
+

@@ -1,0 +1,26 @@
+---
+- name: Configure NFS Server (real Work - CentOS)
+  become: yes
+  action: "{{ ansible_pkg_mgr }} name=nfs-utils state=present"
+  when: ansible_distribution == 'CentOS'
+  
+- name: Create directory for mount
+  file: 
+    path: "{{ ansible_user_dir }}/nfs"
+    state: directory
+
+- name: mount
+  become: yes
+  mount:
+    src: "{{ ansible_env.SSH_CLIENT.split()[0] }}:/nfs_shared"
+    path: "{{ ansible_user_dir }}/nfs"
+    opts: rw,sync,hard,intr
+    state: mounted
+    fstype: nfs
+
+
+
+### 작업 순서 (nfs_client)### 
+# 1. nfs 패키지 설치 
+# 2. 마운트할 공유 디렉토리 생성 
+# 3. Mount

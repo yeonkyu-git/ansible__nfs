@@ -1,0 +1,31 @@
+---
+- name: Configure NFS Server (real Work - CentOS)
+  become: yes
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: Make Share Volumn Path - /nfs_shared
+  become: yes
+  file:
+    path: /nfs_shared
+    state: directory
+    mode: 0777
+  
+- name: configure share volumn in /etc/exports
+  become: yes
+  lineinfile:
+    path: '/etc/exports'
+    line: '/nfs_shared 192.168.1.0/24(rw,sync)'
+
+- name: restart nfs service
+  become: yes
+  service:
+    name: nfs
+    state: restarted
+
+### 작업 순서 (nfs_server)### 
+# 1. nfs 패키지 설치 
+# 2. 공유할 디렉토리 생성 및 권한 부여 
+# 3. 공유 디렉토리 설정 (/etc/exports)
+# 4. nfs 서비스 재시작 
